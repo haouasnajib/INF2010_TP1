@@ -6,8 +6,8 @@ import java.lang.Math.*;
  * Image de type noir et blanc, tons de gris ou couleurs
  * Peut lire et ecrire des fichiers PNM
  * Implemente les methodes de ImageOperations
- * @author : 
- * @date   : 
+ * @author Xhulio Hasani 1737944 - Mohammed Najib Haouas 1572614 
+ * @date : 01 oct 2017
  */
 
 public class PixelMapPlus extends PixelMap implements ImageOperations 
@@ -67,7 +67,7 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 	 */
 	public void convertToBWImage() {
 		this.imageData = this.toBWImage().imageData;
-		this.imageType = ImageType.BW;
+		this.imageType = ImageType.BW; // Recording new Image type
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 	 */
 	public void convertToGrayImage() {
 		this.imageData = this.toGrayImage().imageData;
-		this.imageType = ImageType.Gray;
+		this.imageType = ImageType.Gray; // Recording new Image type
 	}
 	
 	/**
@@ -83,12 +83,12 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 	 */
 	public void convertToColorImage() {
 		this.imageData = this.toColorImage().imageData;
-		this.imageType = ImageType.Color;
+		this.imageType = ImageType.Color; // Recording new Image type
 	}
 	
 	public void convertToTransparentImage() {
 		this.imageData = this.toTransparentImage().imageData;
-		this.imageType = ImageType.Transparent;
+		this.imageType = ImageType.Transparent; // Recording new Image type
 	}
 	
 	/**
@@ -97,72 +97,43 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 	 * ou dans le sens inverse des aiguilles d'une montre (clockWise == false).
 	 * Les pixels vides sont blancs.
 	 */
-	public void rotate(int x, int y, double angleRadian) { // NN working on the assumption xui is horizontal, yvj vertical, correct assumption ? Verify calculation of matrix
-		// int u, v; // indices in new transformed matrix, this.
-		// int i, j; // indices in former matrix, copy of this.
-		// AbstractPixel[][] temporaryImageData = new AbstractPixel[height][width];
-
-		// for (u=0; u < this.height; u++) {
-		// 	for (v=0; v < this.width; v++) {
-		// 		// Compute corresponding i and j in temporary copy PMP
-		// 		j = (int) (Math.cos(angleRadian)*v + Math.sin(angleRadian)*u - Math.cos(angleRadian)*y - Math.sin(angleRadian)*x + y);
-		// 		i = (int) (-Math.sin(angleRadian)*v + Math.cos(angleRadian)*u + Math.sin(angleRadian)*y - Math.cos(angleRadian)*x + x);
-
-		// 		if (i < 0 || i >= this.height || j < 0 || j >= this.width)
-
-		// 			switch (imageType){
-		// 			case BW:
-		// 				this.imageData[u][v] = new BWPixel();
-		// 				break;
-		// 			case Gray:
-		// 				this.imageData[u][v] = new GrayPixel();
-		// 				break;
-		// 			case Color:
-		// 				this.imageData[u][v] = new ColorPixel();
-		// 				break;
-		// 			case Transparent:
-		// 				this.imageData[u][v] = new TransparentPixel();
-		// 				break;
-		// 			}
-					
-		// 		else
-		// 			this.imageData[u][v] = temporaryImageData[i][j];
-		// 	}
-		// }
+	public void rotate(int x, int y, double angleRadian) {
 		AbstractPixel[][] temp = new AbstractPixel[height][width];
 			// Le pixel est porté vers un nouvel emplacement (new_i, new_j) dans la nouvelle image
-			
-			for (int i = 0; i < height; i++) {
-				for (int j = 0; j < width; j++) {
-					int new_i = (int)(Math.cos(angleRadian)*j + Math.sin(angleRadian)*i - Math.cos(angleRadian)*x
-							- Math.sin(angleRadian)*y + x);
-					int new_j = (int)(- Math.sin(angleRadian)*j + Math.cos(angleRadian)*i + Math.sin(angleRadian)*x
-							- Math.cos(angleRadian)*y + y);
-					
-					if(new_i < 0|| new_i >= width || new_j < 0 || new_j >= height){
-						switch (imageType){
-						case BW:
-							temp[i][j] = new BWPixel();
-							break;
-						case Gray:
-							temp[i][j] = new GrayPixel();
-							break;
-						case Color:
-							temp[i][j] = new ColorPixel();
-							break;
-						case Transparent:
-							temp[i][j] = new TransparentPixel();
-							break;
-						}
-					}
-					else {
-						temp[i][j] = imageData[new_j][new_i];
+		
+
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				// Calcul des indices correspondants dans l'image de départ
+				int new_i = (int)(Math.cos(angleRadian)*j + Math.sin(angleRadian)*i - Math.cos(angleRadian)*x
+						- Math.sin(angleRadian)*y + x);
+				int new_j = (int)(- Math.sin(angleRadian)*j + Math.cos(angleRadian)*i + Math.sin(angleRadian)*x
+						- Math.cos(angleRadian)*y + y);
+				
+				// Si ces indices sont à l'extérieur des limites de l'image, remplace les nouveaux AbstractPixel en pixels de type voulu
+				if(new_i < 0|| new_i >= width || new_j < 0 || new_j >= height){
+					switch (imageType){
+					case BW:
+						temp[i][j] = new BWPixel();
+						break;
+					case Gray:
+						temp[i][j] = new GrayPixel();
+						break;
+					case Color:
+						temp[i][j] = new ColorPixel();
+						break;
+					case Transparent:
+						temp[i][j] = new TransparentPixel();
+						break;
 					}
 				}
+				else {
+					temp[i][j] = imageData[new_j][new_i]; // Sinon, on porte les données de l'ancienne image dans leur nouvel emplacement
+				}
 			}
-			
-			imageData = temp;
-
+		}
+		
+		imageData = temp;
 	}
 	
 	/**
@@ -176,9 +147,11 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 			throw new IllegalArgumentException();
 
 		
-		float scaleH = (float) w/this.width;
-		float scaleV = (float) h/this.height; // NN getHeight ??
+		// Computing xy scale factor
+		float scaleH = (float) w/this.width; // int div loses data here, careful
+		float scaleV = (float) h/this.height; // and here
 
+		// Indices declaration
 		int i, j;
 		int u, v;
 
@@ -186,12 +159,14 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 
 		for (u = 0; u < h; u++) {
 			for (v = 0; v < w; v++) {
-				i = (int) (u/scaleV); // NN floor here
-				j = (int) (v/scaleH);
-				newImageData[u][v] = this.imageData[i][j];
+				i = (int) (u/scaleV); // floor here
+				j = (int) (v/scaleH); // and here
+				newImageData[u][v] = this.imageData[i][j]; // Resize using nearest neighbor method
 			}
 		}
 
+		// Copying data to this
+		this.clearData();
 		this.imageData = newImageData;
 		this.width = w;
 		this.height = h;
@@ -199,12 +174,18 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 
 	/**
 	 * Insert pm dans l'image a la position row0 col0
+	 * @param pm : current pixel map
+	 * @param row0 : line of insertion
+	 * @param col0 : column of insertion
 	 */
 	public void inset(PixelMap pm, int row0, int col0)
 	{
+		// Setting scan bounds for pixels to change,
+		// We're changing pixels from row0/col0 until either the end of this or the end of pm
 		int vbound = Math.min(this.height, row0 + pm.height);
 		int hbound = Math.min(this.width, col0 + pm.width);
 
+		// Conversion of pm to destination type
 		switch (this.imageType) {
 			case Transparent:
 				pm = pm.toTransparentImage();
@@ -220,63 +201,45 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 				break;
 		}
 
+		// Insertion
 		for (int i = row0; i < vbound; i++) {
 			for (int j = col0; j < hbound; j++) {
-				this.imageData[i][j] = pm.imageData[i-row0][j-col0]; // NN needs conversion?
+				this.imageData[i][j] = pm.imageData[i-row0][j-col0];
 			}
 		}
 	}
 	
 	/**
-	 * Decoupe l'image 
+	 * Decoupe l'image
+	 * @param h : new height
+	 * @param w : new width
 	 */
 	public void crop(int h, int w)
 	{
 		if(w <= 0 || h <= 0)
 			throw new IllegalArgumentException();
 
-		PixelMapPlus newImageMap = new PixelMapPlus(this.imageType, h, w);
-		newImageMap.inset(this, 0, 0);
+		PixelMapPlus newImageMap = new PixelMapPlus(this.imageType, h, w); // New blank h-by-w image
+		newImageMap.inset(this, 0, 0); // Inserting source image into blank image
 
-		// AbstractPixel[][] newImageData = new AbstractPixel[h][w];
-		// for (int i = 0 ; i < h ; i++ ) {
-		// 	for (int j = 0 ; j < w ; j++ ) {
-		// 		newImageData[i][j] = imageData[i][j];				
-		// 	}
-			
-		// }
-
+		// Copying data to this
 		this.imageData = newImageMap.imageData;
 		this.height = h;
 		this.width = w;
 	}
 	
 	/**
-	 * Effectue une translation de l'image 
+	 * Effectue une translation de l'image
 	 */
 	public void translate(int rowOffset, int colOffset)
 	{
-		// PixelMapPlus newImageObject = new PixelMapPlus(this);
-
-		// int vStartIndex = (rowOffset < 0) ? 0 : rowOffset;
-		// int vEndIndex = (rowOffset > 0) ? this.height : this.height + rowOffset;
-		// int hStartIndex = (colOffset < 0) ? 0 : colOffset;
-		// int hEndIndex = (colOffset > 0) ? this.width : this.width + colOffset;
-
-
-		// for (int i = vStartIndex; i < vEndIndex; i++) {
-		// 	for (int j = hStartIndex; j < hEndIndex; j++) {
-		// 		newImageObject.imageData[i][j] = this.imageData[i-rowOffset][j-colOffset];
-		// 	}
-		// }
-
-
-		// this.imageData = newImageObject.imageData;
-
+		// New image, abstract
 		AbstractPixel[][] tempdata = new AbstractPixel[height][width];
+
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				if ((i - rowOffset) < 0 || i -rowOffset >= height || j - colOffset < 0 || j - colOffset >= width){
+					// Place white pixels in out of bounds locations
 					switch (this.imageType){
 					case BW:
 						tempdata[i][j] = new BWPixel();
@@ -293,9 +256,11 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 					}
 				}
 				else
-					tempdata[i][j] = this.imageData[i-rowOffset][j-colOffset];
+					tempdata[i][j] = this.imageData[i-rowOffset][j-colOffset]; // Place source image in valid locations
 			}
 		}
+
+		// Copying data to this
 		this.imageData = tempdata;
 	}
 	
@@ -305,29 +270,33 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 	 * @param y : rangee autour de laquelle le zoom sera effectue  
 	 * @param zoomFactor : facteur du zoom a effectuer. Doit etre superieur a 1
 	 */
-	public void zoomIn(int x, int y, double zoomFactor) throws IllegalArgumentException { // NN Working on the assumption xi horizontal
+	public void zoomIn(int x, int y, double zoomFactor) throws IllegalArgumentException { // Working on the assumption xi horizontal
 		if(zoomFactor < 1.0)
 			throw new IllegalArgumentException();
 
+		// Recording original attributes
 		int originalHeight = this.height;
 		int originalWidth = this.width;
 
+		// Recording dimensions of zone to enlarge
 		int newHeight = (int) ((float) this.height/zoomFactor);
 		int newWidth = (int) ((float) this.width/zoomFactor);
 
+		// Normalizing x and y if they allow the enlargement zone to be outside the canvas
 		x = (x < ((int) ((float) newWidth/2))) ? ((int) ((float) newWidth/2)) : x;
 		y = (y < ((int) ((float) newHeight/2))) ? ((int) ((float) newHeight/2)) : y;
 
 		x = ((x+((int) ((float) newWidth/2))) > this.width) ? (this.width-((int) ((float) newWidth/2))-1) : x;
 		y = ((y+((int) ((float) newHeight/2))) > this.height) ? (this.height-((int) ((float) newHeight/2))-1) : y;
 
+		// Computing translate offsets as defined in method translate to place enlargement zone on top left of file
 		int hOffset = -(x-((int) ((float) newWidth/2)));
 		int vOffset = -(y-((int) ((float) newHeight/2)));
 
-
-		this.translate(vOffset,hOffset);
-		this.crop(newHeight, newWidth);
-		this.resize(originalWidth, originalHeight);
+		// Modifying this
+		this.translate(vOffset,hOffset); // Translate to top left
+		this.crop(newHeight, newWidth); // Crop excess data
+		this.resize(originalWidth, originalHeight); // Resize to original dimensions, thus enlarging
 	}
 
 	/**
@@ -338,11 +307,11 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 	 * @param newPixel : Le pixel qui remplacera l'ancienne couleur 
 	 * (sa valeur est entre min et max)
 	 */
-	public void replaceColor(AbstractPixel min, AbstractPixel max, AbstractPixel newPixel) { // NN Not sure
+	public void replaceColor(AbstractPixel min, AbstractPixel max, AbstractPixel newPixel) {
 		for (int i = 0; i < this.height; i++) {
 			for (int j = 0; j < this.width; j++) {
 				if ((this.imageData[i][j].compareTo(min) == 1) && (this.imageData[i][j].compareTo(max) == -1)) {
-					this.imageData[i][j] = newPixel;
+					this.imageData[i][j] = newPixel; // this bigger = 1, this smaller = -1
 				}
 			}
 		}
@@ -354,10 +323,11 @@ public class PixelMapPlus extends PixelMap implements ImageOperations
 		
 		for (int i = 0; i < this.height; i++) {
 			for (int j = 0; j < this.width; j++) {
-				newImageObject.imageData[i][j] = this.imageData[this.height - i - 1][j];
+				newImageObject.imageData[i][j] = this.imageData[this.height - i - 1][j]; // vertical flip 
 			}
 		}
 
+		// Copying data to this
 		this.imageData = newImageObject.imageData;
 	}
 }

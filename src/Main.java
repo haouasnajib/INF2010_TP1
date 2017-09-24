@@ -73,10 +73,8 @@ public class Main
 		npmp.resize(npmp.width/2, npmp.height/2);
 		npmp.negate();
 
-//		System.out.println(hpmp.width + " " + hpmp.height);
 
 		pmp.inset(hpmp, 0, 0);
-//		System.out.println(gpmp.imageType);
 		pmp.inset(gpmp, pmp.getHeight()/2, 0);
 		pmp.inset(bwpmp, 0, pmp.getWidth()/2);
 		pmp.inset(npmp, pmp.getHeight()/2, pmp.getWidth()/2);

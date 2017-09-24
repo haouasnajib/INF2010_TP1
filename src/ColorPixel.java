@@ -1,7 +1,7 @@
 /**
  * Classe de pixel en couleurs 
- * @author :
- * @date : 
+ * @author Xhulio Hasani 1737944 - Mohammed Najib Haouas 1572614 
+ * @date : 01 oct 2017
  */
 
 public class ColorPixel extends AbstractPixel
@@ -59,7 +59,7 @@ public class ColorPixel extends AbstractPixel
 		rgba[0] = rgb[0];
 		rgba[1] = rgb[1];
 		rgba[2] = rgb[2];
-		rgba[3] = 255;
+		rgba[3] = 255; // default
 
 		return new TransparentPixel(rgba);
 	}
@@ -67,7 +67,7 @@ public class ColorPixel extends AbstractPixel
 	/**
 	 * Renvoie le negatif du pixel (255-pixel)
 	 */
-	public AbstractPixel Negative() { // POURQUOI ABSTRACT PIXEL?
+	public AbstractPixel Negative() {
 		int[] nrgb = new int[3];
 		nrgb[0] = 255-rgb[0];
 		nrgb[1] = 255-rgb[1];

@@ -1,7 +1,7 @@
 /**
  * Classe de pixel transparent
- * @author :
- * @date : 
+ * @author Xhulio Hasani 1737944 - Mohammed Najib Haouas 1572614 
+ * @date : 01 oct 2017
  */
 
 public class TransparentPixel extends AbstractPixel

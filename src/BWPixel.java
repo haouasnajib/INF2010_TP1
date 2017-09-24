@@ -43,7 +43,7 @@ public class BWPixel extends AbstractPixel
 	 * Renvoie un pixel copie de type noir et blanc
 	 */
 	public BWPixel toBWPixel() {
-		return new BWPixel(this.pixel); // NN POURQUOI NE PAS RETURN THIS? We want a copy?
+		return new BWPixel(this.pixel);
 	}
 	
 	/**
@@ -65,11 +65,14 @@ public class BWPixel extends AbstractPixel
 		return cp;
 	}
 	
+	/**
+	 * Renvoie un pixel copie de type transparant
+	 */
 	public TransparentPixel toTransparentPixel() {
 		int pixelVal = (pixel ? 255 : 0);
 		int[] rgba = new int[4];
 		rgba[0] = rgba[1] = rgba[2] = pixelVal;
-		rgba[3] = 255;
+		rgba[3] = 255; // default value
 		TransparentPixel cp = new TransparentPixel( rgba );
 		return cp;
 	}

@@ -1,7 +1,7 @@
 /**
  * Classe de pixel en tons de gris
- * @author :
- * @date : 
+ * @author Xhulio Hasani 1737944 - Mohammed Najib Haouas 1572614 
+ * @date : 01 oct 2017
  */
 
 public class GrayPixel  extends AbstractPixel 
@@ -67,7 +67,7 @@ public class GrayPixel  extends AbstractPixel
 	{
 		int[] rgba = new int[4];
 		rgba[0] = rgba[1] = rgba[2] = this.pixel;
-		rgba[3] = 255;
+		rgba[3] = 255; // default
 
 		return new TransparentPixel(rgba);
 	}

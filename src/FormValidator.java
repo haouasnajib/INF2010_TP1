@@ -1,7 +1,7 @@
 /**
  * Fichier principal pour l'exercice
- * @author : 
- * @date : 
+ * @author Xhulio Hasani 1737944 - Mohammed Najib Haouas 1572614 
+ * @date : 01 oct 2017
  */
 
 import java.util.Scanner;
@@ -132,14 +132,12 @@ public class FormValidator
 		char[] charKey = new char[ length ];
 		Random generator = new Random( System.nanoTime() );
 
-		// compl�ter
-		// NN
+		// Construction de la clé
 		for ( int i = 0 ; i < length ; i++ ) {
 
-			charKey[i] = (char)(generator.nextInt(26) + 'A');
+			charKey[i] = (char)(generator.nextInt(26) + 'A'); // nextInt(bound) entre 0 et bound-1
 		}
 
-		// modifier
 		return new String(charKey);
 	}
 	
@@ -155,12 +153,11 @@ public class FormValidator
 		Random generator = new Random( System.nanoTime() );
 
 		
-		// compl�ter
+		// Construction de la séquence de transformations
 		for (int i = 0 ; i < nb ;i++ ) {
-			charTransform[i] = generator.nextInt(10);
+			charTransform[i] = generator.nextInt(10); // nextInt(bound) entre 0 et bound-1
 		}
 
-		// modifier
 		return charTransform;
 	}
 

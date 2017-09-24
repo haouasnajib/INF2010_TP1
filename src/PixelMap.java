@@ -2,8 +2,8 @@
  * Classe PixelMap
  * Image de type noir et blanc, tons de gris ou couleurs
  * Peut lire et ecrire des fichiers PNM
- * @author : 
- * @date   : 
+ * @author Xhulio Hasani 1737944 - Mohammed Najib Haouas 1572614 
+ * @date : 01 oct 2017
  */
 
 import java.io.*;
@@ -106,15 +106,16 @@ public class PixelMap
 	protected void AllocateMemory(ImageType type, int h, int w)
 	{
 		if( !(h >0 && w > 0) )
-			return;
+			return; // vérifie si les tailles sont ok
 		
-		// check if must be kept 
+		// Configure les attribus de l'image
 		this.imageType = type; 
 		this.height = h; 
 		this.width = w;
 
-		imageData = new AbstractPixel[h][w];
+		imageData = new AbstractPixel[h][w]; // Nouvelles données vides
 		
+		// Population des données avec un type de pixels
 		for (int row = 0; row < height ; row++ ) {
 
 			for (int col = 0; col < width ; col++) {
@@ -138,25 +139,25 @@ public class PixelMap
 	/**
 	 * Lib�rer la m�moire
 	 */
-	public void clearData() // NN WHAT IS HERE
+	public void clearData()
 	{
 		this.imageData = null;
 	}
 	
 	/**
 	 * Retourne le pixel associe a la position recherchee
-	 * @param row
-	 * @param col
-	 * @return
+	 * @param row : index position ligne
+	 * @param col : index position colonne
+	 * @return pixel demandé
 	 */
 	public AbstractPixel getPixel(int row, int col) throws IndexOutOfBoundsException 
 	{
 		if((row<0) || (col <0))
-			throw new IndexOutOfBoundsException();
+			throw new IndexOutOfBoundsException(); // Indices négatifs
 		else if((row<height) && (col <width))
 			return imageData[row][col];
 		else
-			throw new IndexOutOfBoundsException();
+			throw new IndexOutOfBoundsException(); // Indices trop grands
 	}
 	
 	/**
