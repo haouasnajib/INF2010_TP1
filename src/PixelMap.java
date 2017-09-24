@@ -142,6 +142,8 @@ public class PixelMap
 	public void clearData()
 	{
 		this.imageData = null;
+		this.height = 0;
+		this.width = 0;
 	}
 	
 	/**
